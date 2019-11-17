@@ -1,7 +1,7 @@
 import arg from 'arg';
 import { validate } from './validation';
-
 import { compact } from 'lodash';
+
 const parseArgumentsIntoOptions = (rawArgs) =>{
     const args = arg(
         {
@@ -33,6 +33,5 @@ const parseArgumentsIntoOptions = (rawArgs) =>{
 
 export function cli(args) {
     let options = parseArgumentsIntoOptions(args); 
-    console.log(options)   
     validate(options);
 }
