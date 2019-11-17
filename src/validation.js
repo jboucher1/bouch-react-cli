@@ -26,9 +26,9 @@ export const validateOptions = async (options) => {
     questions.push({
       type: 'input',
       name: 'names',
-      message: `Please create your '${options.template}' name, you may also create multiple ${options.template}s by adding a comma with no spaces i.e "Menu,Checkbox"\nName(s):`,
+      message: `Name your feature!, you may create multiple by adding a comma with no spaces i.e "Menu,Checkbox"\nName(s):`,
       validate: function (value) {
-        let error_message = `You can only add ${options.template}s in this format 'Menu,CheckBox or Menu'`;
+        let error_message = `You can only add name(s) in this format 'Menu,CheckBox or Menu'`;
 
         if (value.length === 0) return error_message;
         if (value.match('^[a-zA-Z,_]*$')) return true;

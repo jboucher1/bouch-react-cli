@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
 import { Templates } from './templates';
-import { each } from 'lodash';
+import { each, compact } from 'lodash';
 import { join } from 'path';
 import chalk from 'chalk'
 
@@ -8,7 +8,7 @@ import chalk from 'chalk'
 
 export const create = (options) => {
     
-    each(options.names, (name) => build(name, options));
+    each(compact(options.names), (name) => build(name, options));
 }
 
 const build = (name, options) =>{
