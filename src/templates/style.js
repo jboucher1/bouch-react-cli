@@ -1,5 +1,5 @@
 export const Style = (name) => {
-    return `.${name}{
-        
-    }`
+return `.${name}{
+    
+}`
 }

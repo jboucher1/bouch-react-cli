@@ -2,7 +2,7 @@ import arg from 'arg';
 import { validate } from './validation';
 import { compact } from 'lodash';
 
-const parseArgumentsIntoOptions = (rawArgs) =>{
+const parseArgumentsIntoOptions = (rawArgs) => {
     const args = arg(
         {
             '--typescript': Boolean,
@@ -13,7 +13,8 @@ const parseArgumentsIntoOptions = (rawArgs) =>{
             '--no-tests': Boolean,
             '--no-style': Boolean,
             '--style': String,
-
+            '--no-index': Boolean,
+            '--ui': Boolean
         },
         {
             argv: rawArgs.slice(2),
@@ -26,12 +27,14 @@ const parseArgumentsIntoOptions = (rawArgs) =>{
         names: compact(args._[1] ? args._[1].split(",") : []),
         folder: !args['--no-folder'],
         style: args['--no-style'] ? false : (args['--style'] || 'css'),
-        tests: !args['--no-tests']
- };
+        tests: !args['--no-tests'],
+        index: !args['--no-index'],
+        ui: args['--ui'] || false
+    };
 }
 
 
 export function cli(args) {
-    let options = parseArgumentsIntoOptions(args); 
+    let options = parseArgumentsIntoOptions(args);
     validate(options);
 }

@@ -1,3 +1,11 @@
 export const Test = (name) => {
-    return `<div>test ${name}</div>`
-    }
+return `import React from 'react';
+import ReactDOM from 'react-dom';
+import { ${name} } from './${name}';
+
+it('renders without crashing', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(<${name} />, div);
+    ReactDOM.unmountComponentAtNode(div);
+});`
+}

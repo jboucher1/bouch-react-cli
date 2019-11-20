@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
 import { create } from './create';
-import { Templates } from './templates';
+import { Names } from './templates';
 
 
 export const validate = async (options) => {
@@ -12,12 +12,12 @@ export const validateOptions = async (options) => {
 
   const questions = [];
 
-  if (Templates.names.indexOf(options.template) == -1) {
+  if (Names.indexOf(options.template) == -1) {
     questions.push({
       type: 'list',
       name: 'template',
       message: 'Please select a template',
-      choices: Templates.names,
+      choices: Names,
       default: 'component',
     });
   }
