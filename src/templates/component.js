@@ -7,7 +7,9 @@ import React, { Component } from 'react';
 export class ${name} extends Component {
     render() {
         return (
-            <p>${name} works!</p>
+            <div className="${name}">
+                <p>${name} works!</p>
+            </div>
         );
     }
 }`

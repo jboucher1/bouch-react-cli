@@ -6,7 +6,9 @@ import React from 'react';
 
 export const ${name} = () => {
         return (
-            <p>${name} works!</p>
+            <div className="${name}">
+                <p>${name} works!</p>
+            </div>
         );
 }`
 }
