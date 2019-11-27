@@ -38,11 +38,25 @@ export const validateOptions = async (options) => {
     })
   }
 
+  if (options.style == undefined) {
+    questions.push({
+      type: 'list',
+      name: 'style',
+      message: 'Please select a style',
+      choices: ['css', 'scss', 'NO STYLE NEEDED']
+    });
+  }
+
 
   const answers = await inquirer.prompt(questions);
 
+  if(answers.style == 'NO STYLE NEEDED'){
+    answers.style = false;
+  }
+
   options.template = answers.template || options.template;
   options.names = options.names.length ? options.names : answers.names.split(',');
+  options.style = options.style !== undefined ? options.style : answers.style;
 
   return options;
 }

@@ -26,7 +26,7 @@ const parseArgumentsIntoOptions = (rawArgs) => {
         directory: args['--directory'],
         names: compact(args._[1] ? args._[1].split(",") : []),
         folder: !args['--no-folder'],
-        style: args['--no-style'] ? false : (args['--style'] || 'css'),
+        style: args['--no-style'] ? false : (args['--style']),
         tests: !args['--no-tests'],
         index: !args['--no-index'],
         ui: args['--ui'] || false
