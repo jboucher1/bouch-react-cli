@@ -1,7 +1,19 @@
-export const Component = (name, style) => {
+export const Component = (name, style, tsx) => {
     let importStyle = `import './${name}.${style}';`;
+    if(tsx) {
+    return `${style ? importStyle : ''}
+import React from 'react';
 
-return `${style ? importStyle : ''}
+export const ${name} = () => {
+    return (
+    <div className="${name}">
+    <p>${name} works!</p>
+    </div>
+    );
+}`;
+    }
+
+    return `${style ? importStyle : ''}
 import React, { Component } from 'react';
 
 export class ${name} extends Component {
@@ -12,5 +24,5 @@ export class ${name} extends Component {
             </div>
         );
     }
-}`
+}`;
 }

@@ -4,7 +4,8 @@ import { compact } from 'lodash';
 
 const parseArgumentsIntoOptions = (rawArgs) => {
     const args = arg(
-        {
+        {   '--native': Boolean,
+            '--tsx': Boolean,
             '--typescript': Boolean,
             '--ts': '--typescript',
             '--directory': String,
@@ -21,15 +22,17 @@ const parseArgumentsIntoOptions = (rawArgs) => {
         }
     );
     return {
+        tsx: args['--typescript'] || false, 
         typescript: args['--typescript'] || false,
         template: args._[0],
         directory: args['--directory'],
         names: compact(args._[1] ? args._[1].split(",") : []),
         folder: !args['--no-folder'],
         style: args['--no-style'] ? false : (args['--style']),
-        tests: !args['--no-tests'],
+        tests: args['--no-tests'],
         index: !args['--no-index'],
-        ui: args['--ui'] || false
+        ui: args['--ui'] || false,
+        native: args['--native']
     };
 }
 

@@ -3,4 +3,5 @@ export { Service } from './service';
 export { Style } from './style';
 export { Test } from './test';
 export { UiComponent } from './ui-component';
-export const Names = ['component', 'service']
+export { Native } from './native';
+export const Names = ['component', 'service'];

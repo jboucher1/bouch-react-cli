@@ -12,6 +12,15 @@ export const validateOptions = async (options) => {
 
   const questions = [];
 
+  if (options.native == undefined) {
+    questions.push({
+      type: 'list',
+      name: 'native',
+      message: 'Is the application',
+      choices: ['Native', 'Web']
+    });
+  }
+
   if (Names.indexOf(options.template) == -1) {
     questions.push({
       type: 'list',
@@ -47,16 +56,37 @@ export const validateOptions = async (options) => {
     });
   }
 
+  if (options.tests == undefined) {
+    questions.push({
+      type: 'list',
+      name: 'tests',
+      message: 'Do you need tests?',
+      choices: ['Yes', 'No']
+    });
+  }
+
+  if (!options.typescript && !options.tsx) {
+    questions.push({
+      type: 'list',
+      name: 'language',
+      message: 'Please select a language',
+      choices: ['ts', 'tsx', 'js']
+    });
+  }
+
 
   const answers = await inquirer.prompt(questions);
 
   if(answers.style == 'NO STYLE NEEDED'){
     answers.style = false;
   }
-
+  options.tsx = answers.language == 'tsx';
+  options.typescript = answers.language == 'ts';
   options.template = answers.template || options.template;
   options.names = options.names.length ? options.names : answers.names.split(',');
   options.style = options.style !== undefined ? options.style : answers.style;
+  options.tests = options.tests !== undefined ? options.tests :  options.tests === 'Yes' ;
+  options.native = options.native !== undefined ? options.native : answers.native === 'Native';
 
   return options;
 }

@@ -1,5 +1,5 @@
 import fs from 'fs-extra';
-import { Component, Style, Test, UiComponent } from './templates';
+import { Component, Style, Test, UiComponent, Native } from './templates';
 import { each, compact } from 'lodash';
 import { join } from 'path';
 import chalk from 'chalk'
@@ -13,8 +13,10 @@ const messages = {
 }
 
 export const create = async (options) => {
+
     let directory = options.directory ? options.directory : `src/${options.template}s`;
-    let attr = options.typescript ? 'ts' : 'js'
+    let attr = options.typescript ? 'ts' : 'js';
+    if(options.tsx) attr = 'tsx';
     let indexDir = `${directory}/index.${attr}`;
 
     await fs.pathExists(indexDir).then((exists) => {
@@ -42,10 +44,14 @@ const build = (name, options, directory, attr, indexDir) => {
         return;
     };
 
-    if (options.ui) {
+    if (options.native) {
+        fs.outputFile(path + attr, Native(name)).then(() => messages.components.push(name))
+
+    } else if (options.ui) {
         fs.outputFile(path + attr, UiComponent(name, style)).then(() => messages.components.push(name))
+
     } else {
-        fs.outputFile(path + attr, Component(name, style)).then(() => messages.components.push(name))
+        fs.outputFile(path + attr, Component(name, style, options.tsx)).then(() => messages.components.push(name))
     }
 
 
@@ -54,7 +60,7 @@ const build = (name, options, directory, attr, indexDir) => {
     }
 
     if (options.tests) {
-        fs.outputFile(path + 'test.' + attr, Test(name)).then(() => messages.tests.push(name))
+        fs.outputFile(path + 'test.' + attr, Test(name, options.tsx)).then(() => messages.tests.push(name))
     }
 
     if (pathExists(indexDir) && options.index) {
@@ -64,7 +70,7 @@ const build = (name, options, directory, attr, indexDir) => {
 }
 
 const addExport = (name) => {
-    return `export { ${name} } from './${name}/${name}';`;
+    return `export * from './${name}/${name}';`;
 }
 
 const pathExists = (path) => {
